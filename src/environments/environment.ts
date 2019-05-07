@@ -5,12 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyC7-cFcFwUBsjIQfER6vWow7WnoCdmGjMM',
-    authDomain: 'cereals-44447.firebaseapp.com',
-    databaseURL: 'https://cereals-44447.firebaseio.com',
-    projectId: 'cereals-44447',
-    storageBucket: 'cereals-44447.appspot.com',
-    messagingSenderId: '408740238624'
+    apiKey: 'AIzaSyBVHl5NhCe1A68TmGq4Jj3O0B8tqadqWMI',
+    authDomain: 'recipeweb-78980.firebaseapp.com',
+    databaseURL: 'https://recipeweb-78980.firebaseio.com',
+    projectId: 'recipeweb-78980',
+    storageBucket: 'recipeweb-78980.appspot.com',
+    messagingSenderId: '577318174139',
+    appId: '1:577318174139:web:39fdbd5848811a7'
   }
 };
 

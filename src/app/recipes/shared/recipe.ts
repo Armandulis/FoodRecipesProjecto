@@ -3,9 +3,11 @@ import {Ingredient} from '../../shared/models/ingredient';
 export interface Recipe {
   id?: string;
   type: string;
-  picture: string;
+  name: string;
+  picture?: string;
   portion: number;
   howTo: string;
-  score: number;
-  ingredients: Ingredient[];
+  score?: number;
+  cookTime: string;
+  ingredients?: Ingredient[];
 }
