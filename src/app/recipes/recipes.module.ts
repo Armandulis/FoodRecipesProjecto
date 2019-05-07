@@ -17,9 +17,6 @@ import {FilesModule} from '../files/files.module';
     ReactiveFormsModule,
     ImageCropperModule,
     FilesModule,
-    ReactiveFormsModule,
-    ImageCropperModule,
-    RecipesRoutingModule
   ]
 })
 export class RecipesModule { }

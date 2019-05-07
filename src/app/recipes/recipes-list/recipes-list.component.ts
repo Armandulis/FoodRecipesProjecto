@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {RecipeModel} from '../shared/recipe.model';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FileService} from '../../files/files/shared/file.service';
 import {tap} from 'rxjs/operators';
-import {RecipesService} from '../recipes-service/recipes-service';
+import {RecipesService} from '../shared/recipes.service';
+import {Recipe} from '../shared/recipe';
 
 @Component({
   selector: 'app-recipes-list',
@@ -13,7 +13,7 @@ import {RecipesService} from '../recipes-service/recipes-service';
 })
 export class RecipesListComponent implements OnInit {
 
-  recipes: Observable<RecipeModel[]>;
+  recipes: Observable<Recipe[]>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,7 +37,7 @@ export class RecipesListComponent implements OnInit {
         })
       );
   }
-  deleteRecipe(recipe: RecipeModel) {
+  deleteRecipe(recipe: Recipe) {
     const obs = this.rs.deleteRecipe(recipe.id);
     obs.subscribe(() => {
       window.alert('balanced as all things should be');

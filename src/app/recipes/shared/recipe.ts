@@ -4,10 +4,15 @@ export interface Recipe {
   id?: string;
   type: string;
   name: string;
-  picture?: string;
-  portion: number;
+  portion: string;
   howTo: string;
   score?: number;
   cookTime: string;
   ingredients?: Ingredient[];
+
+  picture?: string;
+  pictureId?: string;
+  url?: string;
 }
+
+
