@@ -7,6 +7,7 @@ import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import { RecipesDetailsComponent } from './recipes-details/recipes-details.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ImageCropperModule} from 'ngx-image-cropper';
+import {FilesModule} from '../files/files.module';
 
 @NgModule({
   declarations: [RecipesAddComponent, RecipesListComponent, RecipesDetailsComponent],
@@ -15,6 +16,10 @@ import {ImageCropperModule} from 'ngx-image-cropper';
     RecipesRoutingModule,
     ReactiveFormsModule,
     ImageCropperModule,
+    FilesModule,
+    ReactiveFormsModule,
+    ImageCropperModule,
+    RecipesRoutingModule
   ]
 })
 export class RecipesModule { }

@@ -1,1 +1,10 @@
+
 <button routerLink="/recipes/add"> add </button>
+
+<ul>
+  <li class="text" *ngFor="let recipe of recipes | async">
+    <img [src]="recipe.url" *ngIf="recipe.url" style="width: 24px; height: 24px;">
+    {{recipe.name}} -- {{recipe.id}}
+    <button (click)="deleteRecipe(recipe)"> Thanos Snap</button>
+  </li>
+</ul>

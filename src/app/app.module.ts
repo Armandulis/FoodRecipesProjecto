@@ -10,11 +10,15 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
+import {RecipesListComponent} from './recipes/recipes-list/recipes-list.component';
+import {RecipesAddComponent} from './recipes/recipes-add/recipes-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    RecipesListComponent,
+    RecipesAddComponent,
     HomeComponent
   ],
   imports: [
