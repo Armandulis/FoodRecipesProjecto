@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {RecipeModel} from '../shared/recipe.model';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FileService} from '../../files/files/shared/file.service';
 import {tap} from 'rxjs/operators';
-import {RecipesService} from '../recipes-service/recipes-service';
+import {RecipesService} from '../shared/recipes.service';
+import {Recipe} from '../shared/recipe';
+import {FormControl, FormGroup} from '@angular/forms';
+import {Store} from '@ngxs/store';
 
 @Component({
   selector: 'app-recipes-list',
@@ -13,35 +15,21 @@ import {RecipesService} from '../recipes-service/recipes-service';
 })
 export class RecipesListComponent implements OnInit {
 
-  recipes: Observable<RecipeModel[]>;
+
+  recipes: Observable<Recipe[]>;
+
+
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private store: Store,
     private rs: RecipesService,
     private fs: FileService) {
+    this.recipes = this.store.select(state => state.recipes.recipes);
   }
 
   ngOnInit() {
-    this.recipes = this.rs.getRecipes()
-      .pipe(
-        tap(recipes => {
-          recipes.forEach(recipe => {
-            if (recipe.pictureId) {
-              this.fs.getFileUrl(recipe.pictureId)
-                .subscribe(url => {
-                  recipe.url = url;
-                });
-            }
-          });
-        })
-      );
   }
-  deleteRecipe(recipe: RecipeModel) {
-    const obs = this.rs.deleteRecipe(recipe.id);
-    obs.subscribe(() => {
-      window.alert('balanced as all things should be');
-    });
-  }
-
 }

@@ -10,19 +10,26 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
-import {RecipesListComponent} from './recipes/recipes-list/recipes-list.component';
-import {RecipesAddComponent} from './recipes/recipes-add/recipes-add.component';
+import {NgxsModule} from '@ngxs/store';
+import {RouterState} from '@angular/router';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {AppState} from './shared/app.state';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    RecipesListComponent,
-    RecipesAddComponent,
     HomeComponent
   ],
   imports: [
     BrowserModule,
+    NgxsModule.forRoot([
+      RouterState,
+      AppState
+    ]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
