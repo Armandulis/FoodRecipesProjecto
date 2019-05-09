@@ -3,7 +3,7 @@ import {Recipe} from './recipe';
 import {from, Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, switchMap} from 'rxjs/operators';
-import {FileService} from '../../files/files/shared/file.service';
+import {FileService} from '../../files/shared/file.service';
 import {ImageMetadata} from '../../files/shared/image-metadata';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class RecipesService {
   constructor(private db: AngularFirestore, private fs: FileService) { }
 
   addRecipe(recipeData: Recipe): Observable<Recipe> {
-    return from(this.db.collection<Recipe>('recipes').add(
+      return from(this.db.collection<Recipe>('recipes').add(
         {
           name: recipeData.name,
           type: recipeData.type,

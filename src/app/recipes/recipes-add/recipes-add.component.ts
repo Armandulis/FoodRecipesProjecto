@@ -5,6 +5,8 @@ import {FormControl, FormGroup, FormArray} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RecipesService} from '../shared/recipes.service';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
+import {FileMetaData} from '../../files/shared/file-metadata';
+import {ImageMetadata} from '../../files/shared/image-metadata';
 
 @Component({
   selector: 'app-recipes-add',
@@ -13,14 +15,16 @@ import {ImageCroppedEvent} from 'ngx-image-cropper';
 })
 export class RecipesAddComponent implements OnInit {
 
-    inputs = 0;
     recipeFormGroup: FormGroup;
-    ingredientsFormGroup: FormGroup;
     ingredientsFormArray: FormArray;
+
+  imageMetadata: ImageMetadata;
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
   croppedBlob: Blob;
+
+  isLoading = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -43,10 +47,11 @@ export class RecipesAddComponent implements OnInit {
   }
 
   addRecipe(){
+    this.isLoading = true;
     const recipeData: Recipe = this.recipeFormGroup.value;
-    console.log('pressed ze button');
-    this.recipesService.addRecipe(recipeData).subscribe( () => {
-      console.log('it has been added!');
+    this.recipesService.addRecipeWithImage(recipeData, this.imageMetadata).subscribe( () => {
+      this.router.navigate(['../'],
+        {relativeTo: this.activatedRoute});
     });
   }
 
@@ -61,7 +66,6 @@ export class RecipesAddComponent implements OnInit {
     return new FormGroup({
       name: new FormControl(''),
       amount: new FormControl(''),
-      picture: new FormControl(this.croppedImage)
     });
   }
 
@@ -72,15 +76,14 @@ export class RecipesAddComponent implements OnInit {
       this.imageChangedEvent.target.files.length > 0) {
       const imageBeforeCropped = this.imageChangedEvent.target.files[0];
 
-      const imageInfoForDB =  {
+      this.imageMetadata = {
         imageBlob: this.croppedBlob,
-        file: {
+        fileMeta: {
           name: imageBeforeCropped.name,
           type: imageBeforeCropped.type,
           size: imageBeforeCropped.size
         }
       };
-
     }
   }
 

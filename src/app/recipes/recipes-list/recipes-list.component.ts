@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FileService} from '../../files/files/shared/file.service';
+import {FileService} from '../../files/shared/file.service';
 import {tap} from 'rxjs/operators';
 import {RecipesService} from '../shared/recipes.service';
 import {Recipe} from '../shared/recipe';

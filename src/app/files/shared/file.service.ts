@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {defer, from, Observable, pipe} from 'rxjs';
-import {FileMetaData} from '../../shared/file-metadata';
+import {FileMetaData} from './file-metadata';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, switchMap} from 'rxjs/operators';
-import {ImageMetadata} from '../../shared/image-metadata';
+import {ImageMetadata} from './image-metadata';
 
 @Injectable({
   providedIn: 'root'

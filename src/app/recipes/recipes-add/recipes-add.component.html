@@ -71,6 +71,7 @@
 
         [imageChangedEvent]="imageChangedEvent"
         format="png"
+        [aspectRatio]="4 / 3"
         (imageCropped)="imageCropped($event)"
         [resizeToWidth]="400" [onlyScaleDown]="true">
       </image-cropper >
@@ -81,11 +82,6 @@
 
 </div>
 
-
-
-
-
-
 <div class="row justify-content-center" style="margin: 10px;">
   <div formArrayName="ingredients"
          *ngFor="let item of ingredientsFormArray.controls; let i = index;">
@@ -95,7 +91,7 @@
           <div  class="card" style="width: 17rem;">
 
             <div class="card-body">
-              <h5 class="card-title">Add Ingredient</h5>
+              <h5 class="card-title">Ingredient:</h5>
 
               <label for="ingName" >
                 Name:
@@ -115,16 +111,14 @@
 
       </div>
   </div>
-  <button (click)="addIngrediantForm()" class="btn">
-  <div class="buffer">
+  <div class="buffer" (click)="addIngrediantForm()">
     <div  class="card" style="width: 17rem;">
       <img class="card-img-top" src="http://blog.blueapron.com/wp-content/uploads/2013/12/Middle-Eastern-Ingredients.jpg" alt="Card image cap">
       <div class="card-body">
-      <h5 class="card-title">Add Ingredient</h5>
+      <h5 class="card-title">Click to Add Ingredient</h5>
       </div>
       </div>
     </div>
-    </button>
 </div>
 
   <div class="row justify-content-center">
