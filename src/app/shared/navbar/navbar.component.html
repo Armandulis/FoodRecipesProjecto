@@ -7,31 +7,89 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" routerLink="/recipes">Recipes Fish </a>
+        <a class="nav-link" routerLink="/recipes">All Recipes</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" routerLink="/recipes">Recipes Vegan</a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/recipes">Recipes Fish </a>
+      </li>
+
 
     </ul>
-    <form class="form-inline form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <div class="row justify-content-end mr-1" >
+    <form [formGroup]="searchForm" class="form-inline form-inline my-2 my-lg-0">
+      <input formControlName="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 
-      <button class="btn btn-outline-success my-2 my-sm-0 ml-2 ">
-        <a class="nav-item"  routerLink="">
-          Log in
-        </a>
-        </button>
-
-      <ul class="navbar-nav mr-auto p-2">
-        <li class="nav-item active" >
-
-        </li>
-      </ul>
-
     </form>
+      <button (click)="openLogInForm(logIn)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+          Log in
+        </button>
+      <button (click)="openSignUpForm(signUp)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+          Sign Up
+      </button>
+    </div>
 
 
   </div>
 </nav>
+<ng-template #logIn let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Hi there!Log In down below!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="logInForm" (ngSubmit)="tryLogIn()">
+  <div class="modal-body">
+
+            <label class="mr-2" for="emailInput" >
+              Email:
+              <input    formControlName="emailLogIn" placeholder="Email" id="emailInput" class="form-control ">
+            </label>
+
+
+
+            <label for="passwordInput">
+              Password:
+              <input formControlName="passwordLogIn" placeholder="Password" id="passwordInput" type="password" class="form-control ">
+            </label>
+
+  </div>
+  <div class="modal-footer">
+    <button  type="button" class="btn btn-outline-dark" >Log in</button>
+  </div>
+  </form>
+</ng-template>
+
+
+<ng-template #signUp let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" >Hi there! Sign up down below!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="signUpForm" (ngSubmit)="trySignUp()">
+    <div class="modal-body">
+
+      <label class="mr-2" for="emailInputSignUp" >
+        Email:
+        <input width="20%"  formControlName="emailSignUp" placeholder="Email" id="emailInputSignUp" class="form-control ">
+      </label>
+
+
+      <label for="passwordInputSignUp">
+        Password:
+        <input formControlName="passwordSignUp" placeholder="Password"  id="passwordInputSignUp" type="password" class="form-control ">
+      </label>
+
+    </div>
+    <div class="modal-footer">
+      <button  type="button" class="btn btn-outline-dark" type="submit">Sign Up</button>
+    </div>
+  </form>
+</ng-template>

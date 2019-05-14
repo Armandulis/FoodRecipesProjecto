@@ -1,11 +1,12 @@
 
 import * as admin from 'firebase-admin';
 import * as uploadingFunctions from './uploading-functions';
-
+import * as gettingFunctions from './getting-functions';
 admin.initializeApp();
 
 module.exports = {
   ...uploadingFunctions,
+  ...gettingFunctions
 };
 
 // // Start writing Firebase Functions

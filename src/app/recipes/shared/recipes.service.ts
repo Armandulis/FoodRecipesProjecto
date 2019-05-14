@@ -5,6 +5,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map, switchMap} from 'rxjs/operators';
 import {FileService} from '../../files/shared/file.service';
 import {ImageMetadata} from '../../files/shared/image-metadata';
+import {snapshotChanges} from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,36 @@ import {ImageMetadata} from '../../files/shared/image-metadata';
 export class RecipesService {
 
   constructor(private db: AngularFirestore, private fs: FileService) { }
+
+  getRecipeWithID(id: string): Observable<Recipe>  {
+
+    return this.db.collection<Recipe>('recipes').doc(id).snapshotChanges().pipe(
+      map(actions => {
+        const data = actions.payload.data() as Recipe;
+        const recipe: Recipe = {
+          id: id,
+          type: data.type,
+          picture: data.picture,
+          portion: data.portion,
+          howTo: data.howTo,
+          score: data.score,
+          ingredients: data.ingredients,
+          name: data.name,
+          cookTime: data.cookTime
+        };
+        if (recipe.picture) {
+          this.fs.getFileUrl(recipe.picture)
+            .subscribe(url => {
+              recipe.url = url;
+
+            });
+        }
+        return recipe;
+      })
+    );
+
+  }
+
 
   addRecipe(recipeData: Recipe): Observable<Recipe> {
       return from(this.db.collection<Recipe>('recipes').add(
@@ -21,15 +52,44 @@ export class RecipesService {
           portion: recipeData.portion,
           howTo: recipeData.howTo,
           ingredients: recipeData.ingredients,
-          cookTime: recipeData.cookTime
+          cookTime: recipeData.cookTime,
+          picture: recipeData.picture
         }
+
       )
     ).pipe(
         map( recipeReference => {
             recipeData.id = recipeReference.id;
+          console.log(recipeData.picture);
           return recipeData;
         })
       );
+  }
+  getAmountOfRecipes(amount: number): Recipe[] {
+    const recipes: Recipe[] = [];
+    const recipeRefer = this.db.collection('recipes');
+    recipeRefer.ref.limit(amount).get().then( snapshot => {
+      snapshot.forEach( doc => {
+        const data = doc.data() as Recipe;
+        const recipe: Recipe = {
+          id: doc.id,
+          name: data.name,
+          type: data.type,
+          howTo: data.howTo,
+          portion: data.portion,
+          cookTime: data.cookTime,
+          picture: data.picture,
+        };
+        if (recipe.picture) {
+          this.fs.getFileUrl(recipe.picture)
+            .subscribe(url => {
+              recipe.url = url;
+              recipes.push(recipe);
+            });
+        }
+      });
+    });
+    return recipes;
   }
 
 
@@ -41,7 +101,7 @@ export class RecipesService {
         map(actions => {
           return actions.map(action => {
             const data = action.payload.doc.data() as Recipe;
-            return {
+            const recipe: Recipe = {
               id: action.payload.doc.id,
               type: data.type,
               picture: data.picture,
@@ -52,9 +112,27 @@ export class RecipesService {
               name: data.name,
               cookTime: data.cookTime
             };
+              if (recipe.picture) {
+                this.fs.getFileUrl(recipe.picture)
+                  .subscribe(url => {
+                    recipe.url = url;
+
+                  });
+              }
+            return recipe;
           });
         })
       );
+  }
+
+  updateRecipe(recipeToUpdate: Recipe): Observable<void> {
+   return Observable.create( obsUpdated => {
+     this.db.doc('recipes/' + recipeToUpdate.id).
+     update(recipeToUpdate)
+       .then(() => { return obsUpdated.next();})
+       .catch(error =>{ return obsUpdated.error(error);} )
+       .finally( () => { return obsUpdated.complete();});
+    });
   }
 
 
@@ -73,7 +151,7 @@ export class RecipesService {
     return this.fs.uploadImage(imageMeta)
       .pipe(
         switchMap(metadata => {
-          recipe.pictureId = metadata.id;
+          recipe.picture = metadata.id;
           return this.addRecipe(recipe);
         })
       );

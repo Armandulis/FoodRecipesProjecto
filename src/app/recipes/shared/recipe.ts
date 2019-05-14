@@ -11,7 +11,6 @@ export interface Recipe {
   ingredients?: Ingredient[];
 
   picture?: string;
-  pictureId?: string;
   url?: string;
 }
 

@@ -5,11 +5,13 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, switchMap} from 'rxjs/operators';
 import {ImageMetadata} from './image-metadata';
-
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
+
+  croppedBlob: Blob;
+  imageChangedEvent: any = '';
 
   constructor(private storage: AngularFireStorage, private db: AngularFirestore) {
   }
@@ -32,12 +34,13 @@ export class FileService {
     ).pipe(
       switchMap(fileMeta => {
         return defer(() =>
-          this.storage.ref('recipe-pictures' + fileMeta.id)
+          this.storage.ref('recipe-pictures/' + fileMeta.id)
             .put(file)
             .then()
         ).pipe(
           map(fileRef => {
-            return fileMeta;
+            fileRef.id = fileMeta.id;
+            return fileRef;
           })
         );
       })
@@ -57,7 +60,41 @@ export class FileService {
     );
   }
   getFileUrl(id: string ): Observable<any> {
-    return this.storage.ref('recipe-picture/' + id)
+    return this.storage.ref('recipe-pictures/' + id)
       .getDownloadURL();
   }
+
+  public setUpFileInfo(): ImageMetadata {
+
+    let imageMetadata: ImageMetadata;
+
+
+    if (this.imageChangedEvent &&
+      this.imageChangedEvent.target &&
+      this.imageChangedEvent.target.files &&
+      this.imageChangedEvent.target.files.length > 0) {
+      const imageBeforeCropped = this.imageChangedEvent.target.files[0];
+
+      imageMetadata = {
+        imageBlob: this.croppedBlob,
+        fileMeta: {
+          name: imageBeforeCropped.name,
+          type: imageBeforeCropped.type,
+          size: imageBeforeCropped.size
+        }
+      };
+      return imageMetadata;
+    }
+  }
+
+  chosenImage(event): ImageMetadata {
+    this.imageChangedEvent = event;
+    return this.setUpFileInfo();
+  }
+  imageCropped(event): ImageMetadata {
+    this.croppedBlob = event.file;
+    return this.setUpFileInfo();
+  }
+
+
 }

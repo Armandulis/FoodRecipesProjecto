@@ -8,9 +8,10 @@ import { RecipesDetailsComponent } from './recipes-details/recipes-details.compo
 import {ReactiveFormsModule} from '@angular/forms';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {FilesModule} from '../files/files.module';
+import { RecipeUpdateComponent } from './recipe-update/recipe-update.component';
 
 @NgModule({
-  declarations: [RecipesAddComponent, RecipesListComponent, RecipesDetailsComponent],
+  declarations: [RecipesAddComponent, RecipesListComponent, RecipesDetailsComponent, RecipeUpdateComponent],
   imports: [
     CommonModule,
     RecipesRoutingModule,

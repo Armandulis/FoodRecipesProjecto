@@ -3,7 +3,7 @@
 
 <ul>
   <li class="text" *ngFor="let recipe of recipes | async">
-    <img [src]="recipe.url" *ngIf="recipe.url" style="width: 24px; height: 24px;">
+    <img routerLink="/recipes/{{recipe.id}}" [src]="recipe.url" *ngIf="recipe.url" style="width: 24px; height: 24px;">
     {{recipe.name}} -- {{recipe.id}}
     <button (click)="deleteRecipe(recipe)"> Thanos Snap</button>
   </li>

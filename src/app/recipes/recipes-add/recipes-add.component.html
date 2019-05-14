@@ -1,5 +1,5 @@
 <div class="">
-<form  [formGroup]="recipeFormGroup" (ngSubmit)="addRecipe()" ngNoForm>
+<form  [formGroup]="recipeFormGroup" (ngSubmit)="addRecipe()">
   <h1 class="p-4" align="center">Share your recipe with everyone!</h1>
 
 
@@ -13,7 +13,7 @@
   <label>
     --Type:
 
-    <select formControlName="type"  class="form-control" required>
+    <select formControlName="type"  class="form-control">
       <option ngValue="Vegan">Vegan</option>
       <option ngValue="Vegetarian">Vegetarian</option>
       <option ngValue="Sea food">Sea food</option>
@@ -26,7 +26,7 @@
   <label >
     --Portion:
 
-  <select formControlName="portion" class="form-control" required>
+  <select formControlName="portion" class="form-control" >
     <option ngValue="1 person">1 person</option>
     <option ngValue="2-3 people">2-3 people</option>
     <option ngValue="3-4 people">3-4 people</option>
@@ -39,7 +39,7 @@
   <label >
     --Cook time:
 
-    <select formControlName="cookTime" class="form-control" required>
+    <select formControlName="cookTime" class="form-control">
       <option ngValue="Under 10 minutes">Under 10 minutes</option>
       <option ngValue="10-20 minutes">10-20 minutes</option>
       <option ngValue="20-30 minutes">20-30 minutes</option>
@@ -85,10 +85,10 @@
 <div class="row justify-content-center" style="margin: 10px;">
   <div formArrayName="ingredients"
          *ngFor="let item of ingredientsFormArray.controls; let i = index;">
-      <div  [formGroupName]="i" ngNoForm>
+      <div  [formGroupName]="i">
         <div class="buffer">
 
-          <div  class="card" style="width: 17rem;">
+          <div  class="card" style="width: 17rem; background-color: #FBE8A6;">
 
             <div class="card-body">
               <h5 class="card-title">Ingredient:</h5>
@@ -104,6 +104,11 @@
               </label>
 
             </div>
+            <div class="justify-content-end" style="display: flex;">
+              <button style="" type="button" class="btn btn-danger" aria-label="Close" (click)="removeIngredient(i)">
+                <span aria-hidden="true">&times; Remove</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -112,7 +117,7 @@
       </div>
   </div>
   <div class="buffer" (click)="addIngrediantForm()">
-    <div  class="card" style="width: 17rem;">
+    <div  class="card" style="width: 17rem; background-color: #FBE8A6;">
       <img class="card-img-top" src="http://blog.blueapron.com/wp-content/uploads/2013/12/Middle-Eastern-Ingredients.jpg" alt="Card image cap">
       <div class="card-body">
       <h5 class="card-title">Click to Add Ingredient</h5>
@@ -127,7 +132,7 @@
       <textarea  formControlName="howTo" class="form-control required" style="width: 1000px; height: 200px"> </textarea>
     </label>
 
-    <button class="btn btn-primary" style="width: 60%;" type="submit">Add Recipe</button>
+    <button *ngIf="!isLoading" class="btn btn-primary" style="width: 60%;" type="submit">Add Recipe</button>
   </div>
 
 

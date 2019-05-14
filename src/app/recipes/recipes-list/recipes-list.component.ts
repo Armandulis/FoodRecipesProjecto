@@ -23,19 +23,7 @@ export class RecipesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipes = this.rs.getRecipes()
-      .pipe(
-        tap(recipes => {
-          recipes.forEach(recipe => {
-            if (recipe.pictureId) {
-              this.fs.getFileUrl(recipe.pictureId)
-                .subscribe(url => {
-                  recipe.url = url;
-                });
-            }
-          });
-        })
-      );
+    this.recipes = this.rs.getRecipes();
   }
   deleteRecipe(recipe: Recipe) {
     const obs = this.rs.deleteRecipe(recipe.id);

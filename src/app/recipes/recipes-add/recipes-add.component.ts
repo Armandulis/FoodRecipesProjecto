@@ -7,6 +7,7 @@ import {RecipesService} from '../shared/recipes.service';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {FileMetaData} from '../../files/shared/file-metadata';
 import {ImageMetadata} from '../../files/shared/image-metadata';
+import {FileService} from '../../files/shared/file.service';
 
 @Component({
   selector: 'app-recipes-add',
@@ -21,16 +22,15 @@ export class RecipesAddComponent implements OnInit {
   imageMetadata: ImageMetadata;
 
   imageChangedEvent: any = '';
-  croppedImage: any = '';
-  croppedBlob: Blob;
 
   isLoading = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              private recipesService: RecipesService) {
+              private recipesService: RecipesService,
+              private fileService: FileService) {
 
-    this.ingredientsFormArray = new FormArray([this.createRecipe()]);
+    this.ingredientsFormArray = new FormArray([this.createIngredient()]);
 
     this.recipeFormGroup = new FormGroup({
       name: new FormControl(''),
@@ -46,57 +46,42 @@ export class RecipesAddComponent implements OnInit {
   ngOnInit() {
   }
 
-  addRecipe(){
-    this.isLoading = true;
+  addRecipe() {
+
+
     const recipeData: Recipe = this.recipeFormGroup.value;
+    this.isLoading = true;
     this.recipesService.addRecipeWithImage(recipeData, this.imageMetadata).subscribe( () => {
-      this.router.navigate(['../'],
-        {relativeTo: this.activatedRoute});
+     this.router.navigate(['../'],
+       {relativeTo: this.activatedRoute});
     });
   }
 
 
   addIngrediantForm() {
     this.ingredientsFormArray = this.recipeFormGroup.get('ingredients') as FormArray;
-    this.ingredientsFormArray.push(this.createRecipe());
+    this.ingredientsFormArray.push(this.createIngredient());
   }
 
 
-  private createRecipe(): FormGroup {
+  private createIngredient(): FormGroup {
     return new FormGroup({
       name: new FormControl(''),
       amount: new FormControl(''),
     });
   }
 
-  private setUpFileInfo() {
-    if (this.imageChangedEvent &&
-      this.imageChangedEvent.target &&
-      this.imageChangedEvent.target.files &&
-      this.imageChangedEvent.target.files.length > 0) {
-      const imageBeforeCropped = this.imageChangedEvent.target.files[0];
-
-      this.imageMetadata = {
-        imageBlob: this.croppedBlob,
-        fileMeta: {
-          name: imageBeforeCropped.name,
-          type: imageBeforeCropped.type,
-          size: imageBeforeCropped.size
-        }
-      };
-    }
-  }
-
   uploadImage(event) {
     this.imageChangedEvent = event;
-    this.setUpFileInfo();
-
+    this.imageMetadata = this.fileService.chosenImage(event);
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    // preview
-    this.croppedImage = event.base64;
-    this.croppedBlob = event.file;
-    this.setUpFileInfo();
+    this.imageMetadata = this.fileService.imageCropped(event);
+  }
+
+
+  removeIngredient(ingridientToRemove: number){
+    this.ingredientsFormArray.removeAt(ingridientToRemove);
   }
 }
