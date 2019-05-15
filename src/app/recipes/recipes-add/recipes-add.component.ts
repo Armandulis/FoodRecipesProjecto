@@ -28,7 +28,7 @@ export class RecipesAddComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private recipesService: RecipesService,
-              private fileService: FileService) {
+              private fileService: FileService,) {
 
     this.ingredientsFormArray = new FormArray([this.createIngredient()]);
 
@@ -47,8 +47,6 @@ export class RecipesAddComponent implements OnInit {
   }
 
   addRecipe() {
-
-
     const recipeData: Recipe = this.recipeFormGroup.value;
     this.isLoading = true;
     this.recipesService.addRecipeWithImage(recipeData, this.imageMetadata).subscribe( () => {

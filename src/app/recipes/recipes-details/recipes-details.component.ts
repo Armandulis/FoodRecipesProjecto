@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Recipe} from '../shared/recipe';
 import {RecipesService} from '../shared/recipes.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
-
+import {ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
@@ -12,19 +10,20 @@ import {Observable} from 'rxjs';
 export class RecipesDetailsComponent implements OnInit {
 
   recipe: Recipe;
+  recipeID: string;
   constructor(private recipeService: RecipesService,
-              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getRecipe();
   }
 
-  private getRecipe() {
-    const recipeID = this.route.snapshot.paramMap.get('id');
-    this.recipeService.getRecipeWithID(recipeID).subscribe(
+  getRecipe() {
+    this.recipeID = this.route.snapshot.paramMap.get('id');
+    this.recipeService.getRecipeWithID(this.recipeID).subscribe(
       recipeDB => {
         this.recipe = recipeDB;
+        this.recipe.id = this.recipeID;
       }
     );
   }

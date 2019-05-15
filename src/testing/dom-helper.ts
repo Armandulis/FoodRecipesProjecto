@@ -32,7 +32,6 @@ export class DOMHelper<Type> {
     this.getWithElementsContainingText(itemToClick, buttonContent).forEach(btn => {
       btn.nativeElement.click();
       this.fixture.detectChanges();
-      return;
     });
 
   }

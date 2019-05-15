@@ -14,7 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import {NgxsModule} from '@ngxs/store';
+import {RouterState} from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,9 +30,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     AngularFireStorageModule,
     CarouselModule.forRoot(),
     NgbModule,
-    ReactiveFormsModule
-
-
+    ReactiveFormsModule,
 ],
   providers: [],
   bootstrap: [AppComponent]
