@@ -10,15 +10,6 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent
   }
-
-  /*
-  Examples:
-  {  path: 'cereals',
-    loadChildren: './cereals/cereals.module#CerealsModule',
-    data: {animation: 'isRight'}
-  },
-  {path: '', component: HomeComponent},
-   */
 ];
 
 @NgModule({

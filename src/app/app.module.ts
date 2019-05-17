@@ -6,10 +6,20 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import {environment} from '../environments/environment';
 
+
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ReactiveFormsModule} from '@angular/forms';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {NgxsModule} from '@ngxs/store';
+import {RecipesState} from './store/recipes.state';
+
+
 
 @NgModule({
   declarations: [
@@ -23,8 +33,17 @@ import { HomeComponent } from './home/home.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
+    CarouselModule.forRoot(),
+    NgbModule,
+    ReactiveFormsModule,
+    NgxsModule.forRoot([
+      RecipesState
+    ]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot()
 
-  ],
+
+],
   providers: [],
   bootstrap: [AppComponent]
 })

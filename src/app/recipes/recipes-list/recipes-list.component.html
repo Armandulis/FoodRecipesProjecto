@@ -1,3 +1,12 @@
-<p>
-  recipes-list works!
-</p>
+<div *ngIf="recipes">
+  <table class="table table-striped">
+    <tbody>
+    <tr *ngFor="let recipe of recipes | async">
+      <td>{{ recipe.picture }}</td>
+      <td>{{ recipe.name }}</td>
+      <td>{{ recipe.type }}</td>
+      <td>{{ recipe.howTo }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
