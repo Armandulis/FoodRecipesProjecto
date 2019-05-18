@@ -43,11 +43,10 @@ describe('RecipesDetailsComponent', () => {
     domHelper = new DOMHelper(fixture);
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-
   describe('Simple HTML Tests', () => {
     it('should contain 1 <p> for websites description', () => {
       helper.createRecipes(1);

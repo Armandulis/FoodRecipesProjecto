@@ -1,3 +1,4 @@
+
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Recipe} from '../shared/recipe';
 import {RecipesService} from '../shared/recipes.service';
@@ -13,7 +14,9 @@ export class RecipesDetailsComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   recipeID: string;
   searchSubscription: Subscription;
+  
   constructor(private recipeService: RecipesService,
+              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -21,7 +24,6 @@ export class RecipesDetailsComponent implements OnInit, OnDestroy {
       (params: Params) => {
         this.getRecipe();
       });
-
   }
 
   getRecipe() {

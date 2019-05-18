@@ -12,7 +12,6 @@
   </label>
   <label>
     --Type:
-
     <select formControlName="type"  class="form-control" required>
       <option ngValue="Vegan">Vegan</option>
       <option ngValue="Vegetarian">Vegetarian</option>
@@ -25,7 +24,6 @@
 
   <label >
     --Portion:
-
   <select formControlName="portion" class="form-control"  required>
     <option ngValue="1 person">1 person</option>
     <option ngValue="2-3 people">2-3 people</option>
@@ -38,7 +36,6 @@
 
   <label >
     --Cook time:
-
     <select formControlName="cookTime" class="form-control" required>
       <option ngValue="Under 10 minutes">Under 10 minutes</option>
       <option ngValue="10-20 minutes">10-20 minutes</option>
@@ -80,7 +77,6 @@
 
 
 </div>
-
 <div *ngIf="ingredientsFormArray.controls"  class="row justify-content-center" style="margin: 10px;">
   <div formArrayName="ingredients"
          *ngFor="let item of ingredientsFormArray.controls; let i = index;">

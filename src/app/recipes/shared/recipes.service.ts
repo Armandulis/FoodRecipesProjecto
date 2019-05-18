@@ -7,13 +7,14 @@ import {FileService} from '../../files/shared/file.service';
 import {ImageMetadata} from '../../files/shared/image-metadata';
 import {snapshotChanges} from '@angular/fire/database';
 import {FirebaseListObservable} from '@angular/fire/database-deprecated';
+import {Store} from '@ngxs/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesService {
-
-  constructor(private db: AngularFirestore, private fs: FileService) { }
+  
+  constructor(private db: AngularFirestore, private fs: FileService, private store: Store) { }
 
   getRecipeWithID(id: string): Observable<Recipe>  {
 
@@ -186,6 +187,4 @@ export class RecipesService {
         })
       );
   }
-
-
 }

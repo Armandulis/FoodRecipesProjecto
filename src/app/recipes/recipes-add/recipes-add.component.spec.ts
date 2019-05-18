@@ -90,7 +90,6 @@ describe('RecipesAddComponent', () => {
       expect(fileServiceMock.chosenImage).toHaveBeenCalledTimes(1);
     });
   });
-
   describe('ignredients from', () => {
     it('should have 2 form group inside array after onInit', () => {
       domHelper.clickItemsWithName('h5', 'Click to Add Ingredient');
@@ -109,7 +108,6 @@ describe('RecipesAddComponent', () => {
       expect(component.removeIngredient).toHaveBeenCalledTimes(1);
     });
   });
-
   describe('Navigation', () => {
     let location: Location;
     let router: Router;
@@ -131,7 +129,13 @@ describe('RecipesAddComponent', () => {
         {skipLocationChange: false, replaceUrl: false},
         { relativeTo: Route(url:'', path:'') });
     });
+    it('should navigate to Recipes list after clicking button add recipe', () => {
+      reciperServiceMock.addRecipeWithImage.and.returnValues(of(helper.createRecipes(1)));
+      domHelper.clickItemsWithName('button', 'Add Recipe');
+      expect(location.path()).toBe('/add');
+    });
 
      */
   });
 });
+

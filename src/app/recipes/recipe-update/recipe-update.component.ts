@@ -30,16 +30,13 @@ export class RecipeUpdateComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private fileService: FileService) {
-
-
-
-
   }
 
   ngOnInit() {
     this.getRecipe();
   }
-  getRecipe() {
+
+  private getRecipe() {
     this.recipeID = this.route.snapshot.paramMap.get('id');
     this.recipeService.getRecipeWithID(this.recipeID).subscribe(
       recipeDB => {
@@ -81,11 +78,10 @@ export class RecipeUpdateComponent implements OnInit {
       amount: new FormControl(''),
     });
   }
-
   removeIngredient(ingridientToRemove: number){
     this.ingredientsFormArray.removeAt(ingridientToRemove);
   }
-
+  
   updateRecipe() {
     this.recipe = this.recipeFormGroup.value;
     this.recipe.id = this.recipeID;

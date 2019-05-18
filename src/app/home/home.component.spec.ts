@@ -10,7 +10,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {RecipesService} from '../recipes/shared/recipes.service';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
-import {Helper} from '../../testing/recipes-helper';
+import { Helper } from '../../testing/recipes-helper';
+
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
@@ -79,7 +80,6 @@ describe('HomeComponent', () => {
       fixture.detectChanges();
       expect(recipesServiceMock.getAmountOfRecipes).toHaveBeenCalledTimes(1);
     });
-
     it('should show atleast 2 img tags, for 1 recipe when cereals with image url is loaded from cereals service', () => {
       recipesServiceMock.getAmountOfRecipes.and.returnValue(helper.createRecipes(1));
       helper.recipesList[0].url = 'asd';
