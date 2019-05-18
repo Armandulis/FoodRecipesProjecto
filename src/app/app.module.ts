@@ -15,10 +15,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {NgbModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxsModule} from '@ngxs/store';
-import {RouterState} from '@angular/router';
+import {RecipesState} from './store/recipes.state';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
-import {RecipesState} from './store/recipes.state';
 
 @NgModule({
   declarations: [

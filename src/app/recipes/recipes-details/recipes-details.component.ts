@@ -2,7 +2,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Recipe} from '../shared/recipe';
 import {RecipesService} from '../shared/recipes.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Observable, of, Subscription} from 'rxjs';
 @Component({
   selector: 'app-recipes-details',
