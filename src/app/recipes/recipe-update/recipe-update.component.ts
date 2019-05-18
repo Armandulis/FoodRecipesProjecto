@@ -30,16 +30,16 @@ export class RecipeUpdateComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private fileService: FileService) {
-    this.getRecipe();
+
 
 
 
   }
 
   ngOnInit() {
-
+    this.getRecipe();
   }
-  private getRecipe() {
+  getRecipe() {
     this.recipeID = this.route.snapshot.paramMap.get('id');
     this.recipeService.getRecipeWithID(this.recipeID).subscribe(
       recipeDB => {
@@ -82,21 +82,11 @@ export class RecipeUpdateComponent implements OnInit {
     });
   }
 
-  private imageCropped(event: ImageCroppedEvent) {
-    this.imageMetadata = this.fileService.imageCropped(event);
-  }
-
-  private uploadImage(event: Event) {
-    this.imageChangedEvent = event;
-    this.imageMetadata = this.fileService.chosenImage(event);
-  }
-
   removeIngredient(ingridientToRemove: number){
     this.ingredientsFormArray.removeAt(ingridientToRemove);
   }
 
-  private updateRecipe() {
-
+  updateRecipe() {
     this.recipe = this.recipeFormGroup.value;
     this.recipe.id = this.recipeID;
     this.recipeService.updateRecipe(this.recipe).subscribe( () =>{

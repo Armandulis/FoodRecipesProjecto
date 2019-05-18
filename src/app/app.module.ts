@@ -12,7 +12,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxsModule} from '@ngxs/store';
 import {RouterState} from '@angular/router';
@@ -31,6 +31,7 @@ import {RouterState} from '@angular/router';
     CarouselModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
+    NgbTypeaheadModule,
 ],
   providers: [],
   bootstrap: [AppComponent]

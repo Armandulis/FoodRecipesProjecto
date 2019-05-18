@@ -72,22 +72,15 @@ describe('RecipesAddComponent', () => {
 
   describe('add Recipes', () => {
     it('should call addRecipe 1time when add Recipe button is clicked once', () => {
-      spyOn(component, 'addRecipe');
+     spyOn(component, 'addRecipe');
       domHelper.clickItemsWithName('button', 'Add Recipe');
       fixture.detectChanges();
       expect(component.addRecipe).toHaveBeenCalledTimes(1);
     });
     it('should call addRecipeWImage from service 1time when add Recipe button is clicked once', () => {
-      domHelper.clickItemsWithName('button', 'Add Recipe');
+     domHelper.clickItemsWithName('button', 'Add Recipe');
       fixture.detectChanges();
       expect(reciperServiceMock.addRecipeWithImage).toHaveBeenCalledTimes(1);
-    });
-    it('should call addRecipeWImage with data', () => {
-      helper.createRecipes(1);
-      reciperServiceMock.addRecipeWithImage(helper.recipesList[0], null);
-      component.addRecipe();
-      fixture.detectChanges();
-      // expect(reciperServiceMock.addRecipeWithImage).toHaveBeenCalledWith(helper.recipesList[0], null);
     });
   });
   describe('Image for Recipe', () => {
@@ -95,6 +88,25 @@ describe('RecipesAddComponent', () => {
       component.uploadImage(event);
       fixture.detectChanges();
       expect(fileServiceMock.chosenImage).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('ignredients from', () => {
+    it('should have 2 form group inside array after onInit', () => {
+      domHelper.clickItemsWithName('h5', 'Click to Add Ingredient');
+      fixture.detectChanges();
+      expect(component.ingredientsFormArray.length).toBe(2);
+    });
+    it('should have 0 form group inside array after onInit', () => {
+      domHelper.clickItemsWithName('button', 'Remove');
+      fixture.detectChanges();
+      expect(component.ingredientsFormArray.length).toBe(0);
+    });
+    it('should have called remove ingredients once after clicking remove ingredients', () => {
+      spyOn(component, 'removeIngredient');
+      domHelper.clickItemsWithName('button', 'Remove');
+      fixture.detectChanges();
+      expect(component.removeIngredient).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -112,7 +124,7 @@ describe('RecipesAddComponent', () => {
     /*
     fix this
     it('should navigate to Recipes list after clicking button add recipe', () => {
-      reciperServiceMock.addRecipeWithImage.and.returnValues(of(helper.createRecipes(1)));
+      reciperServiceMock.addRecipeWithImage.and.returnValues(of(helper.createRecipes(1)[0]));
       spyOn(router, 'navigateByUrl');
       domHelper.clickItemsWithName('button', 'Add Recipe');
       expect(router.navigateByUrl).toHaveBeenCalledWith(router.createUrlTree(['/add']),

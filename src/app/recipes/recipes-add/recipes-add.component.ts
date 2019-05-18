@@ -28,7 +28,7 @@ export class RecipesAddComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private recipesService: RecipesService,
-              private fileService: FileService,) {
+              private fileService: FileService) {
 
     this.ingredientsFormArray = new FormArray([this.createIngredient()]);
 

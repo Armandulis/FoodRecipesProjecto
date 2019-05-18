@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Recipe} from './recipe';
-import {from, Observable} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, switchMap} from 'rxjs/operators';
 import {FileService} from '../../files/shared/file.service';
 import {ImageMetadata} from '../../files/shared/image-metadata';
 import {snapshotChanges} from '@angular/fire/database';
+import {FirebaseListObservable} from '@angular/fire/database-deprecated';
 
 @Injectable({
   providedIn: 'root'
@@ -91,7 +92,36 @@ export class RecipesService {
     });
     return recipes;
   }
+/*
+  searchRecipe(search: string): Observable<Recipe[]> {
+    const recipes: Recipe[] = [];
+    this.db.collection('recipes').ref.orderBy('name').
+      .get().then( snapshots => {
+        snapshots.forEach( snap => {
+         const data = snap.data() as Recipe;
+          const recipe: Recipe = {
+            id: data.id,
+            name: data.name,
+            type: data.type,
+            howTo: data.howTo,
+            portion: data.portion,
+            cookTime: data.cookTime,
+            picture: data.picture,
+          };
+          if (recipe.picture) {
+            this.fs.getFileUrl(recipe.picture)
+              .subscribe(url => {
+                recipe.url = url;
+                recipes.push(recipe);
+              });
+          }
+        });
+    });
 
+    return of(recipes);
+  }
+
+ */
 
   getRecipes(): Observable<Recipe[]> {
     return this.db
@@ -156,4 +186,6 @@ export class RecipesService {
         })
       );
   }
+
+
 }

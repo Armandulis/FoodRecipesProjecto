@@ -5,6 +5,7 @@ import {FileService} from '../../files/shared/file.service';
 import {tap} from 'rxjs/operators';
 import {RecipesService} from '../shared/recipes.service';
 import {Recipe} from '../shared/recipe';
+import {componentRefresh} from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-recipes-list',

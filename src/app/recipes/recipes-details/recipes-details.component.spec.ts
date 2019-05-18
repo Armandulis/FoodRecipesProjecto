@@ -79,6 +79,12 @@ describe('RecipesDetailsComponent', () => {
     it('should a strong tag with Type:', () => {
       expect(domHelper.getWithElementsContainingText('strong', 'Type:').length).toBe(1);
     });
+    it('should show no img tags when recipes with no image url is loaded onInit from recipe service', () => {
+      component.recipe = helper.createRecipes(1)[0];
+      helper.recipesList[0].url = undefined;
+      fixture.detectChanges();
+      expect(domHelper.getAllOfElementsByTag('img').length).toBe(0);
+    });
   });
   describe('Load Page', () => {
     it('should call service to get recipe with an id', () => {
@@ -91,12 +97,20 @@ describe('RecipesDetailsComponent', () => {
       fixture.detectChanges();
       expect(component.getRecipe).toHaveBeenCalledTimes(1);
     });
-    it('should have 1 img tag after oninit', () => {
+    it('should have 1 img tag after oninit, for recipe with image', () => {
       helper.createRecipes(1);
       component.recipe = helper.recipesList[0];
       fixture.detectChanges();
       expect(domHelper.getAllOfElementsByTag('img').length).toBeGreaterThanOrEqual(1);
     });
+    it('should have no img tag after oninit, for recipe with no image', () => {
+      helper.createRecipes(1);
+      helper.recipesList[0].url = undefined;
+      component.recipe = helper.recipesList[0];
+      fixture.detectChanges();
+      expect(domHelper.getAllOfElementsByTag('img').length).toBe(0);
+    });
+
 
   });
 });
