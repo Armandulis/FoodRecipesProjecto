@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RecipesService} from '../shared/recipes.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Recipe} from '../shared/recipe';
@@ -7,14 +7,16 @@ import {ImageMetadata} from '../../files/shared/image-metadata';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {FileService} from '../../files/shared/file.service';
 import {forEach} from '@angular/router/src/utils/collection';
+import {CreateRecipe, UpdateRecipe} from '../../store';
+import {Store} from '@ngxs/store';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-recipe-update',
   templateUrl: './recipe-update.component.html',
   styleUrls: ['./recipe-update.component.scss']
 })
-export class RecipeUpdateComponent implements OnInit {
-
+export class RecipeUpdateComponent implements OnInit, OnDestroy {
   recipe: Recipe;
 
   recipeFormGroup: FormGroup;
@@ -22,23 +24,21 @@ export class RecipeUpdateComponent implements OnInit {
 
   isLoading = false;
 
-  imageMetadata: ImageMetadata;
-  imageChangedEvent: any = '';
-
   recipeID: string;
+  getRecipeWithIDSubscription: Subscription;
   constructor(private recipeService: RecipesService,
               private router: Router,
               private route: ActivatedRoute,
-              private fileService: FileService) {
+              private store: Store) {
   }
 
   ngOnInit() {
     this.getRecipe();
   }
 
-  private getRecipe() {
+  getRecipe() {
     this.recipeID = this.route.snapshot.paramMap.get('id');
-    this.recipeService.getRecipeWithID(this.recipeID).subscribe(
+    this.getRecipeWithIDSubscription = this.recipeService.getRecipeWithID(this.recipeID).subscribe(
       recipeDB => {
         this.recipe = recipeDB;
         this.ingredientsFormArray = new FormArray([]);
@@ -78,18 +78,20 @@ export class RecipeUpdateComponent implements OnInit {
       amount: new FormControl(''),
     });
   }
-  removeIngredient(ingridientToRemove: number){
+  removeIngredient(ingridientToRemove: number) {
     this.ingredientsFormArray.removeAt(ingridientToRemove);
   }
-  
   updateRecipe() {
     this.recipe = this.recipeFormGroup.value;
     this.recipe.id = this.recipeID;
-    this.recipeService.updateRecipe(this.recipe).subscribe( () =>{
-      this.router.navigate(['../../' + this.recipe.id],
-        {relativeTo: this.route});
-    });
+
+    this.store.dispatch(new UpdateRecipe(this.recipe)).subscribe();
+
+    this.router.navigate(['../../' + this.recipe.id],
+      {relativeTo: this.route});
+
   }
-
-
+  ngOnDestroy(): void {
+    this.getRecipeWithIDSubscription.unsubscribe();
+  }
 }

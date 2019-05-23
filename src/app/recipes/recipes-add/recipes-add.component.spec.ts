@@ -12,23 +12,22 @@ import {Recipe} from '../shared/recipe';
 import {Location} from '@angular/common';
 import {FileService} from '../../files/shared/file.service';
 import {Helper} from '../../../testing/recipes-helper';
+import {Store} from '@ngxs/store';
 
 describe('RecipesAddComponent', () => {
   let component: RecipesAddComponent;
   let fixture: ComponentFixture<RecipesAddComponent>;
   let domHelper: DOMHelper<RecipesAddComponent>;
-  let reciperServiceMock: any;
   let fileServiceMock: any;
   let helper: Helper;
+  let storeMock: any;
   beforeEach(async(() => {
     fileServiceMock = jasmine.createSpyObj('FileService', ['chosenImage']);
-    fileServiceMock.chosenImage.and.returnValue(null);
-    reciperServiceMock = jasmine.createSpyObj('RecipeService', ['addRecipeWithImage']);
-    reciperServiceMock.addRecipeWithImage.and.returnValues(of([]));
+    storeMock = jasmine.createSpyObj('Store', ['dispatch']);
     TestBed.configureTestingModule({
       declarations: [ RecipesAddComponent ],
       providers: [
-        {provide: RecipesService, useValue: reciperServiceMock},
+        {provide: Store, useValue: storeMock},
         {provide: FileService, useValue: fileServiceMock},
       ],
       imports: [
@@ -71,18 +70,22 @@ describe('RecipesAddComponent', () => {
   });
 
   describe('add Recipes', () => {
-    it('should call addRecipe 1time when add Recipe button is clicked once', () => {
-     spyOn(component, 'addRecipe');
-      domHelper.clickItemsWithName('button', 'Add Recipe');
-      fixture.detectChanges();
-      expect(component.addRecipe).toHaveBeenCalledTimes(1);
-    });
-    it('should call addRecipeWImage from service 1time when add Recipe button is clicked once', () => {
-     domHelper.clickItemsWithName('button', 'Add Recipe');
-      fixture.detectChanges();
-      expect(reciperServiceMock.addRecipeWithImage).toHaveBeenCalledTimes(1);
+    it('should call dispach with create recipe from store 1time when addRecipe is triggered', () => {
+      component.imageMetadata = {
+        fileMeta: {
+          size: 2,
+          type: 'w',
+          id: 'w',
+          lastModified: 2,
+          name: 'w'
+        }
+      };
+      storeMock.dispatch.and.returnValue(of());
+      component.addRecipe();
+      expect(storeMock.dispatch).toHaveBeenCalledTimes(1);
     });
   });
+
   describe('Image for Recipe', () => {
     it('should call fileService once after choosing image with filechooser', () => {
       component.uploadImage(event);

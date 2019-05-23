@@ -13,8 +13,8 @@
     <div class="row justify-content-end mr-1" >
     <div class="form-inline form-inline my-2 my-lg-0">
     </div>
-      <form [formGroup]="searchForm" (ngSubmit)="navigate()" ngNoForm>
-        <input formControlName="search"  type="text" (keyup)="search($event)" placeholder="Search by name" list="recipe" class="form" required>
+      <form [formGroup]="searchForm" (ngSubmit)="navigate()" >
+        <input formControlName="search"  type="text" (keyup)="search($event)" placeholder="Search by name" list="recipe" class="form">
         <datalist   id="recipe">
           <option *ngFor="let recipeSearch of recipes" value="{{recipeSearch.name}}">
 
@@ -43,12 +43,6 @@
               Email:
               <input    formControlName="emailLogIn" placeholder="Email" id="emailInput" class="form-control " required>
             </label>
-
-            <label for="passwordInput">
-              Password:
-              <input formControlName="passwordLogIn" placeholder="Password" id="passwordInput" type="password" class="form-control " required>
-            </label>
-
 
             <label for="passwordInput">
               Password:

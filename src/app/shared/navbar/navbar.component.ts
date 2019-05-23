@@ -67,13 +67,16 @@ export class NavbarComponent implements OnInit {
     } else {
       this.recipes = this.recipesToSearch.filter(rec =>
         rec.name.toLowerCase().indexOf($event.target.value.toLowerCase()) === 0);
+      console.log($event.target.value.toLowerCase());
     }
   }
 
   navigate() {
-    this.recipesToSearch.filter(rec =>
+
+    this.recipes.filter(rec =>
       rec.name.toLowerCase().indexOf(this.searchForm.get('search').value.toLowerCase()) === 0);
-    this.router.navigateByUrl('/recipes/' + this.recipesToSearch[0].id);
+    this.router.navigateByUrl('/recipes/' + this.recipes[0].id);
+    console.log(this.recipesToSearch[0].id);
     this.searchForm.get('search').setValue('');
   }
 }
