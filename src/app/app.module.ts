@@ -18,6 +18,7 @@ import {NgxsModule} from '@ngxs/store';
 import {RecipesState} from './store/recipes.state';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {DataSharingService} from './shared/services/data-sharing.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()
 ],
-  providers: [],
+  providers: [DataSharingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -21,15 +21,22 @@
         </datalist>
         <button type="submit" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">Search</button>
       </form>
-      <button (click)="openLogInForm(logIn)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+      <button *ngIf="!user" (click)="openLogInForm(logIn)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Log in
-        </button>
-      <button (click)="openSignUpForm(signUp)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+      </button>
+      <button *ngIf="!user" (click)="openSignUpForm(signUp)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Sign Up
       </button>
+      <button *ngIf="user" (click)="tryLogOut()" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+          Log out
+      </button>
+
     </div>
   </div>
 </nav>
+
+<p *ngIf="user"> Hi {{user.email}}!</p>
+
 <ng-template #logIn let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Hi there!Log In down below!</h4>
@@ -49,11 +56,6 @@
               <input formControlName="passwordLogIn" placeholder="Password" id="passwordInput" type="password" class="form-control " required>
             </label>
 
-
-            <label for="passwordInput">
-              Password:
-              <input formControlName="passwordLogIn" placeholder="Password" id="passwordInput" type="password" class="form-control " required>
-            </label>
 
   </div>
   <div class="modal-footer">
