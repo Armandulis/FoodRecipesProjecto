@@ -9,12 +9,10 @@ describe('FireStarter' , () => {
 
   beforeEach(() => {
     cy.visit('http://localhost:4200');
-  })
+  });
 
-  it('Shows a recipe list xd', () => {
-    cy.get('#navbar').click();
-    cy.contains('recipes');
-    cy.get('/recipes');
+  it('Should contain nav', () => {
+    cy.contains('nav');
   });
 
 });

@@ -1,4 +1,5 @@
 import {Recipe} from '../app/recipes/shared/recipe';
+import {Observable, of} from 'rxjs';
 
 export class Helper {
   recipesList: Recipe[] = [];
@@ -23,5 +24,51 @@ export class Helper {
       });
     }
     return this.recipesList;
+  }
+  // --- recipe service helper --- //
+  actions: any[] = [];
+  getActions(amount: number): Observable<any[]>{
+    for (let i = 0; i < 0; i++){
+      this.actions.push({
+        payload: {
+          doc: {
+            id: 'abc' + i,
+            data: () => {
+              return {
+                type: 'tast',
+              name: 'name',
+              portion: 'portion',
+              howTo: 'string',
+              cookTime: 'string'
+              };
+            }
+          }
+        }
+      });
+    }
+    return of(this.actions);
+  }
+  actionsWithPicture: any[] = [];
+  getActionsWithPicture(amount: number): Observable<any[]>{
+    for (let i = 0; i < 0; i++) {
+      this.actionsWithPicture.push({
+        payload: {
+          doc: {
+            id: 'abc' + i,
+            data: () => {
+              return {
+                type: 'tast',
+                name: 'name',
+                portion: 'portion',
+                howTo: 'string',
+                cookTime: 'string',
+                picture: 'wow'
+              };
+            }
+          }
+        }
+      });
+    }
+    return of(this.actionsWithPicture);
   }
 }

@@ -5,8 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {RouterTestingModule} from '@angular/router/testing';
 import {DOMHelper} from '../../../testing/dom-helper';
-import {RecipeUpdateComponent} from '../../recipes/recipe-update/recipe-update.component';
-import {RecipesDetailsComponent} from '../../recipes/recipes-details/recipes-details.component';
 import {Helper} from '../../../testing/recipes-helper';
 import {of} from 'rxjs';
 import {RecipesService} from '../../recipes/shared/recipes.service';
@@ -123,17 +121,5 @@ describe('NavbarComponent', () => {
         {skipLocationChange: false, replaceUrl: false});
     });
      */
-  });
-
-  describe('form tests', () => {
-    it('should fail when inputs are empty ', () => {
-      domHelper.clickItemsWithName('button', 'Log in');
-      domHelper.clickItemsWithName('button', 'Log in');
-      expect(component.signUpForm.valid).toBeFalsy();
-    });
-    it('should fail when inputs are empty ', () => {
-      domHelper.clickItemsWithName('button', 'Log in');
-      expect(component.signUpForm.valid).toBeFalsy();
-    });
   });
 });

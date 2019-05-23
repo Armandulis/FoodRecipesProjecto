@@ -87,7 +87,6 @@ describe('RecipesDetailsComponent', () => {
   });
   describe('Load Page', () => {
     it('should call service to get recipe with an id', () => {
-      fixture.detectChanges();
       expect(recipesServiceMock.getRecipeWithID).toHaveBeenCalledTimes(1);
     });
     it('should get Recipe should be called once', () => {
@@ -100,7 +99,7 @@ describe('RecipesDetailsComponent', () => {
       helper.createRecipes(1);
       component.recipe = helper.recipesList[0];
       fixture.detectChanges();
-      expect(domHelper.getAllOfElementsByTag('img').length).toBeGreaterThanOrEqual(1);
+      expect(domHelper.getAllOfElementsByTag('img').length).toBe(1);
     });
     it('should have no img tag after oninit, for recipe with no image', () => {
       helper.createRecipes(1);

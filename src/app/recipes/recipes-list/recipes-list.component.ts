@@ -5,7 +5,8 @@ import {FileService} from '../../files/shared/file.service';
 import {tap} from 'rxjs/operators';
 import {RecipesService} from '../shared/recipes.service';
 import {Recipe} from '../shared/recipe';
-import {Store} from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
+import {LoadRecipes, RecipesState, RemoveRecipe} from '../../store';
 
 @Component({
   selector: 'app-recipes-list',
@@ -14,25 +15,24 @@ import {Store} from '@ngxs/store';
 })
 export class RecipesListComponent implements OnInit {
 
+  @Select(RecipesState.recipes)
   recipes: Observable<Recipe[]>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private rs: RecipesService,
-    private store: Store,) {
-    this.recipes = this.store.select(state => state.recipes.recipes);
+    private store: Store) {
+
   }
 
   ngOnInit() {
-    this.recipes = this.rs.getRecipes();
+   // this.recipes = this.store.select(state => state.recipes.recipes);
+    this.store.dispatch(new LoadRecipes());
   }
 
   deleteRecipe(recipe: Recipe) {
-    const obs = this.rs.deleteRecipe(recipe.id);
-    obs.subscribe(() => {
-      window.alert('balanced as all things should be');
-    });
+    this.store.dispatch(new RemoveRecipe(recipe));
   }
 
 }

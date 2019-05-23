@@ -3,7 +3,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Recipe} from '../shared/recipe';
 import {RecipesService} from '../shared/recipes.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable, of, Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {Select} from '@ngxs/store';
+import {RecipesState} from '../../store';
 @Component({
   selector: 'app-recipes-details',
   templateUrl: './recipes-details.component.html',
@@ -11,10 +13,12 @@ import {Observable, of, Subscription} from 'rxjs';
 })
 export class RecipesDetailsComponent implements OnInit, OnDestroy {
 
+  @Select(RecipesState.recipes)
+  recipes: Observable<Recipe[]>;
   recipe: Recipe;
   recipeID: string;
   searchSubscription: Subscription;
-  
+  getRecipeWithIDSubscription: Subscription;
   constructor(private recipeService: RecipesService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -28,7 +32,7 @@ export class RecipesDetailsComponent implements OnInit, OnDestroy {
 
   getRecipe() {
     this.recipeID = this.route.snapshot.paramMap.get('id');
-      this.recipeService.getRecipeWithID(this.recipeID).subscribe(
+    this.getRecipeWithIDSubscription = this.recipeService.getRecipeWithID(this.recipeID).subscribe(
         recipeDB => {
           this.recipe = recipeDB;
           this.recipe.id = this.recipeID;
@@ -38,5 +42,6 @@ export class RecipesDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.searchSubscription.unsubscribe();
+    this.getRecipeWithIDSubscription.unsubscribe();
   }
 }

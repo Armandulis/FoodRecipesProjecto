@@ -5,16 +5,12 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map, switchMap} from 'rxjs/operators';
 import {FileService} from '../../files/shared/file.service';
 import {ImageMetadata} from '../../files/shared/image-metadata';
-import {snapshotChanges} from '@angular/fire/database';
-import {FirebaseListObservable} from '@angular/fire/database-deprecated';
-import {Store} from '@ngxs/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesService {
-  
-  constructor(private db: AngularFirestore, private fs: FileService, private store: Store) { }
+  constructor(private db: AngularFirestore, private fs: FileService) { }
 
   getRecipeWithID(id: string): Observable<Recipe>  {
 
@@ -118,7 +114,6 @@ export class RecipesService {
           }
         });
     });
-
     return of(recipes);
   }
 
@@ -160,9 +155,9 @@ export class RecipesService {
    return Observable.create( obsUpdated => {
      this.db.doc('recipes/' + recipeToUpdate.id).
      update(recipeToUpdate)
-       .then(() => { return obsUpdated.next();})
-       .catch(error =>{ return obsUpdated.error(error);} )
-       .finally( () => { return obsUpdated.complete();});
+       .then(() => { obsUpdated.next();})
+       .catch(error =>{ obsUpdated.error(error);} )
+       .finally( () => {  obsUpdated.complete();});
     });
   }
 
@@ -171,9 +166,9 @@ export class RecipesService {
     return Observable.create(obs => {
       this.db.doc<Recipe>('recipes/' + id)
         .delete()
-        .then(() => obs.next())
-        .catch(err => obs.error(err))
-        .finally(obs.finally());
+        .then(() => { return obs.next(); })
+        .catch(err => {return obs.error(err); })
+        .finally(() => { return obs.complete(); });
     });
   }
 
