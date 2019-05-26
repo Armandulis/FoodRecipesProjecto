@@ -1,7 +1,53 @@
-<button routerLink="/recipes/add"> add </button>
+<li *ngFor="let recipe of recipes | async">
+<section class="product">
+  <div class="product__photo">
+    <div class="photo-container">
+      a
+      <div class="photo-main">
+        <div class="controls">
+        </div>
+        <img  src="{{recipe.url}}">
+      </div>
+      <div class="photo-album"  >
+        <ul>
+          <li><img src="https://www.myinstants.com/media/instants_images/dio.PNG" alt=""></li>
+          <li><img src="https://steamuserimages-a.akamaihd.net/ugc/960852728834729155/A9919256625131414B8E81FB5FE7862912A7923E/"></li>
+          <li><img src="https://i.guim.co.uk/img/media/327e46c3ab049358fad80575146be9e0e65686e7/0_0_1023_742/master/1023.jpg?width=300&quality=85&auto=format&fit=max&s=02632218051da209be64b27e96722c43" alt="green apple"></li>
+          <li><img src="https://www.meme-arsenal.com/memes/c684277a39909270beb0b6b6001d5b32.jpg" alt="apple top"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="recipe__info">
+    <div class="title">
+      <h1>{{recipe.name}}</h1>
+    </div>
+    <div class="container col-md-3 ">
 
+    </div>
+    <div class="price">
+      User Score: <span>{{recipe.score}}</span>
+    </div>
+    <div class="variant">
+      <h3>Ingredients</h3>
+      <ul>
+        <li><img src="{{recipe.ingredients}}"></li>
+        <li><img src="{{recipe.ingredients}}"></li>
+        <li><img src="{{recipe.ingredients}}"></li>
+        <li><img src="{{recipe.ingredients}}"></li>
+      </ul>
+    </div>
+    <div class="description">
+      <h3>Cooking Instructions</h3>
+      <ul>
+        <h2>{{recipe.cookTime}}</h2>
+        <li>{{recipe.howTo}}</li>
+        <li>Apples may be good for bone health</li>
+        <li>They're linked to a lowest risk of diabetes</li>
+      </ul>
+    </div>
+    <button routerLink="/recipes/{{recipe.id}}" class="buy--btn">Details</button>
+  </div>
 
-<div *ngFor="let recipe of recipes | async">
-  pic: {{ recipe.picture }} name:  {{ recipe.name }}
-  <button (click)="deleteRecipe(recipe)"> Delete Recipe</button>
-</div>
+</section>
+

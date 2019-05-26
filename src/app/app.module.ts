@@ -12,13 +12,14 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import {NgbModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
-import {NgxsModule} from '@ngxs/store';
-import {RecipesState} from './store/recipes.state';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
-import {DataSharingService} from './shared/services/data-sharing.service';
+import {NgxsModule} from '@ngxs/store';
+import {RecipesState} from './store/recipes.state';
+
+
 
 @NgModule({
   declarations: [
@@ -35,14 +36,15 @@ import {DataSharingService} from './shared/services/data-sharing.service';
     CarouselModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
-    NgbTypeaheadModule,
     NgxsModule.forRoot([
       RecipesState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()
+
+
 ],
-  providers: [DataSharingService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

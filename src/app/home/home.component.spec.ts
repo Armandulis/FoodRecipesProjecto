@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed, tick} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import {DOMHelper} from '../../testing/dom-helper';
@@ -10,7 +10,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {RecipesService} from '../recipes/shared/recipes.service';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
-import { Helper } from '../../testing/recipes-helper';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -51,11 +50,11 @@ describe('HomeComponent', () => {
     it('should contain 1 carousel', () => {
       expect(domHelper.getAllOfElementsByTag('carousel').length).toBe(1);
     });
-    it('should contain 1 slide inside 1 carousel', () => {
-      expect(domHelper.getAllOfElementsByTag('slide').length).toBe(1);
+    it('should contain 3 slides inside 1 carousel', () => {
+      expect(domHelper.getAllOfElementsByTag('slide').length).toBe(3);
     });
-    it('should contain 1 h4 tag inside  slide', () => {
-      expect(domHelper.getAllOfElementsByTag('h4').length).toBe(1);
+    it('should contain h4 tag inside each slide', () => {
+      expect(domHelper.getAllOfElementsByTag('h4').length).toBe(3);
     });
     it('should contain h5 tag inside recipe examples', () => {
       recipesServiceMock.getAmountOfRecipes.and.returnValue(helper.createRecipes(1));
@@ -80,29 +79,38 @@ describe('HomeComponent', () => {
       fixture.detectChanges();
       expect(recipesServiceMock.getAmountOfRecipes).toHaveBeenCalledTimes(1);
     });
-    it('should show atleast 2 img tags, for 1 recipe when cereals with image url is loaded from cereals service', () => {
+
+    it('should show 4 img tags, 3 slides, 1recipe when cereals with image url is loaded async from cereals service', () => {
       recipesServiceMock.getAmountOfRecipes.and.returnValue(helper.createRecipes(1));
-      helper.recipesList[0].url = 'asd';
+
+      helper.recipesList[0].url = 'wow';
       component.ngOnInit();
       fixture.detectChanges();
-      expect(domHelper.getAllOfElementsByTag('img').length).toBeGreaterThanOrEqual(2);
+      expect(domHelper.getAllOfElementsByTag('img').length).toBe(4);
     });
-    it('should show atleast 4 img tags, for 2 recipe when cereals with image url is loaded from cereals service', () => {
-      recipesServiceMock.getAmountOfRecipes.and.returnValue(helper.createRecipes(2));
-      helper.recipesList[0].url = 'asd';
-      helper.recipesList[1].url = 'asd';
-      component.ngOnInit();
-      fixture.detectChanges();
-      expect(domHelper.getAllOfElementsByTag('img').length).toBeGreaterThanOrEqual(4);
-    });
-    it('should show no img tags when recipes with no image url is loaded onInit from recipe service', () => {
+    it('should show 3 img tags only for slides when recipes with no image url is loaded onInit from recipe service', () => {
       recipesServiceMock.getAmountOfRecipes.and.returnValue(helper.createRecipes(1));
       helper.recipesList[0].picture = undefined;
-      helper.recipesList[0].url = undefined;
       component.ngOnInit();
       fixture.detectChanges();
-      expect(domHelper.getAllOfElementsByTag('img').length).toBe(0);
+      expect(domHelper.getAllOfElementsByTag('img').length).toBe(3);
     });
   });
 });
 
+class Helper {
+  recipesList: Recipe[] = [];
+
+  createRecipes(amount: number): Recipe[] {
+    for (let i = 0; i < amount; i++) {
+      this.recipesList.push({
+        name: 'recipe' + i,
+        type: 'fish',
+        howTo: 'cook',
+        cookTime: 'time: ' + i,
+        portion: i + ' people'
+      });
+    }
+    return this.recipesList;
+  }
+}

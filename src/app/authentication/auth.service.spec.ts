@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataSharingService } from './data-sharing.service';
+import { AuthService } from './auth.service';
 
-describe('DataSharingService', () => {
+describe('AuthService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DataSharingService = TestBed.get(DataSharingService);
+    const service: AuthService = TestBed.get(AuthService);
     expect(service).toBeTruthy();
   });
 });

@@ -9,13 +9,13 @@
       </div>
     </slide>
     <slide *ngIf="recipes[1] && recipes[1].url">
-      <img routerLink="/recipes" [src]="recipes[1].url"   alt="second slide" style="display: block; width: 100%;">
+      <img [src]="recipes[1].url"   alt="second slide" style="display: block; width: 100%;">
       <div class="carousel-caption">
         <h4>Find desired Dishes</h4>
       </div>
     </slide>
     <slide *ngIf="recipes[2] && recipes[2].url" >
-      <img routerLink="/recipes" [src]="recipes[2].url" alt="third slide" style="display: block; width: 100%;">
+      <img  [src]="recipes[2].url" alt="third slide" style="display: block; width: 100%;">
       <div class="carousel-caption">
         <h4>Unique Deserts</h4>
       </div>

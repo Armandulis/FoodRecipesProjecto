@@ -1,12 +1,8 @@
 // load Recipe actions
 import {Recipe} from '../recipes/shared/recipe';
-import {RecipesService} from '../recipes/shared/recipes.service';
-import {ImageMetadata} from '../files/shared/image-metadata';
 
 export class LoadRecipes {
   static readonly type = '[Recipes] Load Recipes';
-  constructor() {
-  }
 }
 export class LoadRecipesSuccess {
   static readonly type = '[Recipes] Load Recipes Success';
@@ -20,15 +16,15 @@ export class LoadRecipesFail {
 // create Recipe actions
 export class CreateRecipe {
   static readonly type = '[Recipes] Create Recipe';
-  constructor(public readonly payload: Recipe, public readonly imageMetaData: ImageMetadata) {}
+  constructor(public readonly payload: Recipe) {}
 }
 export class CreateRecipeSuccess {
   static readonly type = '[Recipes] Create Recipe Success';
-  constructor() {}
+  constructor(public readonly payload: Recipe) {}
 }
 export class CreateRecipeFail {
   static readonly type = '[Recipes] Create Recipe Fail';
-  constructor(public readonly error?: any) {}
+  constructor(public readonly payload?: Recipe) {}
 }
 
 // update Recipe actions
@@ -52,11 +48,11 @@ export class RemoveRecipe {
 }
 export class RemoveRecipeSuccess {
   static readonly type = '[Recipes] Remove Recipe Success';
-  constructor() {}
+  constructor(public readonly payload: Recipe) {}
 }
 export class RemoveRecipeFail {
   static readonly type = '[Recipes] Remove Recipe Fail';
-  constructor(public readonly error: any) {}
+  constructor(public readonly payload?: Recipe) {}
 }
 
 // selected Pizza action

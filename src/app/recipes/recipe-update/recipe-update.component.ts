@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {RecipesService} from '../shared/recipes.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Recipe} from '../shared/recipe';
@@ -7,16 +7,14 @@ import {ImageMetadata} from '../../files/shared/image-metadata';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {FileService} from '../../files/shared/file.service';
 import {forEach} from '@angular/router/src/utils/collection';
-import {CreateRecipe, UpdateRecipe} from '../../store';
-import {Store} from '@ngxs/store';
-import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-recipe-update',
   templateUrl: './recipe-update.component.html',
   styleUrls: ['./recipe-update.component.scss']
 })
-export class RecipeUpdateComponent implements OnInit, OnDestroy {
+export class RecipeUpdateComponent implements OnInit {
+
   recipe: Recipe;
 
   recipeFormGroup: FormGroup;
@@ -24,21 +22,26 @@ export class RecipeUpdateComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
+  imageMetadata: ImageMetadata;
+  imageChangedEvent: any = '';
+
   recipeID: string;
-  getRecipeWithIDSubscription: Subscription;
   constructor(private recipeService: RecipesService,
               private router: Router,
               private route: ActivatedRoute,
-              private store: Store) {
+              private fileService: FileService) {
+    this.getRecipe();
+
+
+
   }
 
   ngOnInit() {
-    this.getRecipe();
-  }
 
-  getRecipe() {
+  }
+  private getRecipe() {
     this.recipeID = this.route.snapshot.paramMap.get('id');
-    this.getRecipeWithIDSubscription = this.recipeService.getRecipeWithID(this.recipeID).subscribe(
+    this.recipeService.getRecipeWithID(this.recipeID).subscribe(
       recipeDB => {
         this.recipe = recipeDB;
         this.ingredientsFormArray = new FormArray([]);
@@ -78,20 +81,29 @@ export class RecipeUpdateComponent implements OnInit, OnDestroy {
       amount: new FormControl(''),
     });
   }
-  removeIngredient(ingridientToRemove: number) {
+
+  private imageCropped(event: ImageCroppedEvent) {
+    this.imageMetadata = this.fileService.imageCropped(event);
+  }
+
+  private uploadImage(event: Event) {
+    this.imageChangedEvent = event;
+    this.imageMetadata = this.fileService.chosenImage(event);
+  }
+
+  removeIngredient(ingridientToRemove: number){
     this.ingredientsFormArray.removeAt(ingridientToRemove);
   }
-  updateRecipe() {
+
+  private updateRecipe() {
+
     this.recipe = this.recipeFormGroup.value;
     this.recipe.id = this.recipeID;
-
-    this.store.dispatch(new UpdateRecipe(this.recipe)).subscribe();
-
-    this.router.navigate(['../../' + this.recipe.id],
-      {relativeTo: this.route});
-
+    this.recipeService.updateRecipe(this.recipe).subscribe( () =>{
+      this.router.navigate(['../../' + this.recipe.id],
+        {relativeTo: this.route});
+    });
   }
-  ngOnDestroy(): void {
-    this.getRecipeWithIDSubscription.unsubscribe();
-  }
+
+
 }
