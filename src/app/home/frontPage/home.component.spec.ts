@@ -1,16 +1,16 @@
 import {async, ComponentFixture, TestBed, tick} from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import {DOMHelper} from '../../testing/dom-helper';
-import {RecipesAddComponent} from '../recipes/recipes-add/recipes-add.component';
+import {DOMHelper} from '../../../testing/dom-helper';
+import {RecipesAddComponent} from '../../recipes/recipes-add/recipes-add.component';
 import {of} from 'rxjs';
 import {CarouselModule} from 'ngx-bootstrap';
-import {Recipe} from '../recipes/shared/recipe';
+import {Recipe} from '../../recipes/shared/recipe';
 import {RouterTestingModule} from '@angular/router/testing';
-import {RecipesService} from '../recipes/shared/recipes.service';
+import {RecipesService} from '../../recipes/shared/recipes.service';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
-import { Helper } from '../../testing/recipes-helper';
+import { Helper } from '../../../testing/recipes-helper';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

@@ -10,7 +10,7 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './home/frontPage/home.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {NgbModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -24,7 +24,6 @@ import {DataSharingService} from './shared/services/data-sharing.service';
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +31,6 @@ import {DataSharingService} from './shared/services/data-sharing.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    CarouselModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
     NgbTypeaheadModule,
