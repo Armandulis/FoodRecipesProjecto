@@ -10,7 +10,6 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
-import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -25,7 +24,6 @@ import {RecipesState} from './store/recipes.state';
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +31,6 @@ import {RecipesState} from './store/recipes.state';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    CarouselModule.forRoot(),
     NgbModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([

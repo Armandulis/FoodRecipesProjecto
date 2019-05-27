@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Recipe} from '../recipes/shared/recipe';
-import {RecipesService} from '../recipes/shared/recipes.service';
-import {Observable} from 'rxjs';
+import {Recipe} from '../../recipes/shared/recipe';
+import {RecipesService} from '../../recipes/shared/recipes.service';
 
 @Component({
   selector: 'app-home',
