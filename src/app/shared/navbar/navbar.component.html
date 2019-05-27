@@ -9,58 +9,55 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/recipes">All Recipes</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/recipes">Recipes Vegan</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/recipes">Recipes Fish </a>
-      </li>
-
-
     </ul>
     <div class="row justify-content-end mr-1" >
-    <form [formGroup]="searchForm" class="form-inline form-inline my-2 my-lg-0">
-      <input formControlName="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <div class="form-inline form-inline my-2 my-lg-0">
+    </div>
+      <form [formGroup]="searchForm" (ngSubmit)="navigate()" >
+        <input formControlName="search"  type="text" (keyup)="search($event)" placeholder="Search by name" list="recipe" class="form">
+        <datalist   id="recipe">
+          <option *ngFor="let recipeSearch of recipes" value="{{recipeSearch.name}}">
 
-    </form>
-      <button (click)="openLogInForm(logIn)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+        </datalist>
+        <button type="submit" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">Search</button>
+      </form>
+      <button *ngIf="!user" (click)="openLogInForm(logIn)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Log in
-        </button>
-      <button (click)="openSignUpForm(signUp)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+      </button>
+      <button *ngIf="!user" (click)="openSignUpForm(signUp)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Sign Up
       </button>
+      <button *ngIf="user" (click)="tryLogOut()" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+          Log out
+      </button>
+
     </div>
-
-
   </div>
 </nav>
+
+<p *ngIf="user"> Hi {{user.email}}!</p>
+
 <ng-template #logIn let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Hi there!Log In down below!</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">&times;</button>
   </div>
 
-  <form [formGroup]="logInForm" (ngSubmit)="tryLogIn()">
+  <form [formGroup]="logInForm" (ngSubmit)="tryLogIn()" ngNoForm>
   <div class="modal-body">
 
             <label class="mr-2" for="emailInput" >
               Email:
-              <input    formControlName="emailLogIn" placeholder="Email" id="emailInput" class="form-control ">
+              <input    formControlName="emailLogIn" placeholder="Email" id="emailInput" class="form-control " required>
             </label>
-
-
 
             <label for="passwordInput">
               Password:
-              <input formControlName="passwordLogIn" placeholder="Password" id="passwordInput" type="password" class="form-control ">
+              <input formControlName="passwordLogIn" placeholder="Password" id="passwordInput" type="password" class="form-control " required>
             </label>
-
   </div>
   <div class="modal-footer">
-    <button  type="button" class="btn btn-outline-dark" >Log in</button>
+    <button  type="submit" class="btn btn-outline-dark" >Log in</button>
   </div>
   </form>
 </ng-template>
@@ -69,27 +66,29 @@
 <ng-template #signUp let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" >Hi there! Sign up down below!</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">&times;</button>
   </div>
-  <form [formGroup]="signUpForm" (ngSubmit)="trySignUp()">
+  <form [formGroup]="signUpForm" (ngSubmit)="trySignUp()" ngNoForm>
     <div class="modal-body">
 
       <label class="mr-2" for="emailInputSignUp" >
         Email:
-        <input width="20%"  formControlName="emailSignUp" placeholder="Email" id="emailInputSignUp" class="form-control ">
+        <input width="20%"  formControlName="emailSignUp" placeholder="Email" id="emailInputSignUp" class="form-control " required>
       </label>
 
 
       <label for="passwordInputSignUp">
-        Password:
-        <input formControlName="passwordSignUp" placeholder="Password"  id="passwordInputSignUp" type="password" class="form-control ">
+      Password:
+      <input formControlName="passwordSignUp" placeholder="Password"  id="passwordInputSignUp" type="password" class="form-control " required>
+    </label>
+      <label for="passwordInputSignUpRepeat">
+         Repeat Password:
+        <input formControlName="passwordSignUpRepeat" placeholder="Password"  id="passwordInputSignUpRepeat" type="password" class="form-control " required>
       </label>
 
     </div>
     <div class="modal-footer">
-      <button  type="button" class="btn btn-outline-dark" type="submit">Sign Up</button>
+      <button class="btn btn-outline-dark" type="submit">Sign Up</button>
     </div>
   </form>
 </ng-template>

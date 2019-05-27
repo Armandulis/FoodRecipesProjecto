@@ -30,10 +30,19 @@ export class DOMHelper<Type> {
 
   clickItemsWithName(itemToClick: string, buttonContent: string) {
     this.getWithElementsContainingText(itemToClick, buttonContent).forEach(btn => {
+      console.log('button: ' + buttonContent + ' was clicked');
       btn.nativeElement.click();
       this.fixture.detectChanges();
-      return;
     });
 
+  }
+
+  fillAllInputsAndSelects(){
+    this.getAllOfElementsByTag('input').forEach( element => {
+      element.nativeElement.textContent = 'Testing';
+    });
+    this.getAllOfElementsByTag('textarea').forEach( element => {
+      element.nativeElement.textContent = 'Testing';
+    });
   }
 }

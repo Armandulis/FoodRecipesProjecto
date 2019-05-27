@@ -1,5 +1,5 @@
 <div class="" *ngIf="recipe">
-  <form  [formGroup]="recipeFormGroup" (ngSubmit)="updateRecipe()">
+  <form  [formGroup]="recipeFormGroup" (ngSubmit)="updateRecipe()" ngNoForm>
     <h1 class="p-4" align="center">update {{recipe.name}}</h1>
 
 
@@ -8,26 +8,25 @@
 
       <label>
         --Name:
-        <input style="width: 25rem; flex: 10rem;" type="text" formControlName="name"  required class="form-control" >
+        <input style="width: 25rem; flex: 10rem;" type="text" formControlName="name" class="form-control" required>
       </label>
       <label>
         --Type:
-
-        <select formControlName="type"  class="form-control">
+        <select formControlName="type"  class="form-control" required>
           <option ngValue="Vegan">Vegan</option>
           <option ngValue="Vegetarian">Vegetarian</option>
           <option ngValue="Sea food">Sea food</option>
           <option ngValue="Asian food">Asian food</option>
           <option ngValue="Fast food">Fast food</option>
           <option ngValue="Deserts">Deserts</option>
+          <option ngValue="Deserts" selected>Everyday food</option>
         </select>
       </label>
 
       <label >
         --Portion:
-
-        <select formControlName="portion" class="form-control" >
-          <option ngValue="1 person">1 person</option>
+        <select formControlName="portion" class="form-control" required >
+          <option ngValue="1 person" selected>1 person</option>
           <option ngValue="2-3 people">2-3 people</option>
           <option ngValue="3-4 people">3-4 people</option>
           <option ngValue="4-5 people">4-5 people</option>
@@ -39,53 +38,23 @@
       <label >
         --Cook time:
 
-        <select formControlName="cookTime" class="form-control">
+        <select formControlName="cookTime" class="form-control" required>
           <option ngValue="Under 10 minutes">Under 10 minutes</option>
           <option ngValue="10-20 minutes">10-20 minutes</option>
-          <option ngValue="20-30 minutes">20-30 minutes</option>
+          <option ngValue="20-30 minutes" selected>20-30 minutes</option>
           <option ngValue="30-60 minutes">30-60 minutes</option>
-          <option ngValue="Over an hour">Over an hour</option>
+          <option ngValue="Over an hour" >Over an hour</option>
         </select>
 
 
 
       </label>
-      <div style="margin-top: 2%; margin-left: 1%;">
-        <label>
-          <a class="btn btn-primary">
-            Choose picture for Recipe
-            <input
-
-              (change)="uploadImage($event)"
-              accept="images/*"
-              id="file_input_file"
-              class="none"
-              type="file">
-          </a>
-        </label>
-      </div>
-
-      <label>
-        <div class="" style="max-width: 25rem; min-width: 15rem;">
-          <image-cropper
-
-            [imageChangedEvent]="imageChangedEvent"
-            format="png"
-            [aspectRatio]="4 / 3"
-            (imageCropped)="imageCropped($event)"
-            [resizeToWidth]="400" [onlyScaleDown]="true">
-          </image-cropper >
-
-        </div>
-      </label>
-
-
     </div>
 
     <div class="row justify-content-center" style="margin: 10px;">
       <div formArrayName="ingredients"
            *ngFor="let item of ingredientsFormArray.controls; let i = index;">
-        <div  [formGroupName]="i">
+        <div  [formGroupName]="i" ngNoForm>
           <div class="buffer">
 
             <div  class="card" style="width: 17rem; background-color: #FBE8A6;" >
@@ -106,9 +75,7 @@
 
               </div>
               <div class="justify-content-end" style="display: flex;">
-                <button style="" type="button" class="btn btn-danger" aria-label="Close" (click)="removeIngredient(i)">
-                  <span aria-hidden="true">&times; Remove</span>
-                </button>
+                <button style="" type="button" class="btn btn-danger" aria-label="Close" (click)="removeIngredient(i)">Remove</button>
               </div>
             </div>
           </div>
@@ -130,7 +97,7 @@
     <div class="row justify-content-center" style=" display: flex">
       <label>
         --Instructions:
-        <textarea  formControlName="howTo" class="form-control required" style="width: 1000px; height: 200px"> </textarea>
+        <textarea  formControlName="howTo" class="form-control required" style="width: 1000px; height: 200px" required> </textarea>
       </label>
 
       <button *ngIf="!isLoading" class="btn btn-primary" style="width: 60%;" type="submit">Update Recipe</button>

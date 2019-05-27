@@ -9,6 +9,7 @@ import {FileMetaData} from '../../files/shared/file-metadata';
 import {ImageMetadata} from '../../files/shared/image-metadata';
 import {FileService} from '../../files/shared/file.service';
 import {Store} from '@ngxs/store';
+import {CreateRecipe} from '../../store';
 
 @Component({
   selector: 'app-recipes-add',
@@ -28,9 +29,8 @@ export class RecipesAddComponent implements OnInit {
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              private recipesService: RecipesService,
-              private store: Store,
-              private fileService: FileService) {
+              private fileService: FileService,
+              private store: Store) {
 
     this.ingredientsFormArray = new FormArray([this.createIngredient()]);
 
@@ -50,13 +50,17 @@ export class RecipesAddComponent implements OnInit {
 
   addRecipe() {
 
-
     const recipeData: Recipe = this.recipeFormGroup.value;
-    this.isLoading = true;
-    this.recipesService.addRecipeWithImage(recipeData, this.imageMetadata).subscribe( () => {
-     this.router.navigate(['../'],
-       {relativeTo: this.activatedRoute});
-    });
+    if (this.imageMetadata == null){
+      window.alert('You must choose an image to upload Recipe!');
+    }  else {
+      this.store.dispatch(new CreateRecipe(recipeData, this.imageMetadata)).subscribe(() => {
+
+      });
+      this.router.navigate(['../'],
+        {relativeTo: this.activatedRoute});
+      this.isLoading = true;
+    }
   }
 
 
@@ -83,7 +87,7 @@ export class RecipesAddComponent implements OnInit {
   }
 
 
-  removeIngredient(ingridientToRemove: number){
+  removeIngredient(ingridientToRemove: number) {
     this.ingredientsFormArray.removeAt(ingridientToRemove);
   }
 }
