@@ -9,6 +9,9 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/recipes">All Recipes</a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/recipes/add">Share Recipe</a>
+      </li>
     </ul>
     <div class="row justify-content-end mr-1" >
     <div class="form-inline form-inline my-2 my-lg-0">
@@ -24,10 +27,10 @@
       <button *ngIf="!user" (click)="openLogInForm(logIn)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Log in
       </button>
-      <button *ngIf="!user" (click)="openSignUpForm(signUp)" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+      <button *ngIf="!user" (click)="openSignUpForm(signUp)" id="signUpButton" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Sign Up
       </button>
-      <button *ngIf="user" (click)="tryLogOut()" class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
+      <button *ngIf="user" (click)="tryLogOut()"  class="nav-item btn btn-outline-success my-2 my-sm-0 ml-2 ">
           Log out
       </button>
 

@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RecipesService } from './recipes.service';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+} from '@angular/fire/firestore';
 import {FileService} from '../../files/shared/file.service';
 import {of} from 'rxjs';
 import {Helper} from '../../../testing/recipes-helper';
+import {AngularFireModule} from '@angular/fire';
 
 
 
@@ -21,8 +23,9 @@ describe('RecipesService', () => {
     helper = new Helper();
     firestoreMock = jasmine.createSpyObj('AngularFirestore', ['collection']);
     firestoreCollection = jasmine.createSpyObj('collection', ['snapshotChanges', 'valueChanges']);
-    firestoreCollection.snapshotChanges.and.returnValue(of([]));
     firestoreMock.collection.and.returnValue(firestoreCollection);
+    firestoreCollection.snapshotChanges.and.returnValue(of([]));
+
 
     fileServiceMock = jasmine.createSpyObj('FileService', ['getFileUrl', 'uploadImage']);
     TestBed.configureTestingModule({
@@ -45,6 +48,7 @@ describe('RecipesService', () => {
       service.getRecipes();
     });
     it('should call collection on firestore once', () => {
+      service.getRecipes();
       expect(firestoreMock.collection).toHaveBeenCalledTimes(1);
     });
     it('should call collection on firestore with recipes as a parameter', () => {

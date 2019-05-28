@@ -4,7 +4,7 @@ import { FileService } from './file.service';
 import {Helper} from '../../../testing/recipes-helper';
 import {of} from 'rxjs';
 import {AngularFireModule} from '@angular/fire';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorage} from '@angular/fire/storage';
 describe('FileService', () => {
   //  private storage: AngularFireStorage, private db: AngularFirestore
@@ -15,7 +15,7 @@ describe('FileService', () => {
 
   beforeEach(() => {
     helper = new Helper();
-    firestoreMock = jasmine.createSpyObj('AngularFirestore', ['collection']);
+    firestoreMock = jasmine.createSpyObj('AngularFirestore', ['collection', 'add']);
     firestoreCollection = jasmine.createSpyObj('collection', ['snapshotChanges', 'valueChanges']);
     firestoreCollection.snapshotChanges.and.returnValue(of([]));
     firestoreMock.collection.and.returnValue(firestoreCollection);
@@ -24,6 +24,8 @@ describe('FileService', () => {
 
     TestBed.configureTestingModule({
     imports: [
+
+      AngularFirestoreModule,
       AngularFireModule
     ],
     providers: [

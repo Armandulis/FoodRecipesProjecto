@@ -11,6 +11,8 @@ import {RecipesService} from '../../recipes/shared/recipes.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
+import {AuthService} from '../../authentication/auth.service';
+import {DataSharingService} from '../services/data-sharing.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -19,16 +21,27 @@ describe('NavbarComponent', () => {
   let recipesServiceMock: any;
   let helper: Helper;
   let ngbModal: any;
+  let dataShareMock: any;
+  let authMock: any;
 
   beforeEach(async(() => {
     helper = new Helper();
     recipesServiceMock = jasmine.createSpyObj('RecipeService', ['getRecipes']);
+    dataShareMock = jasmine.createSpyObj('DataSharingService', ['']);
+
+    // cant figure out how to define shared class
+    Object.defineProperty(dataShareMock, 'isUserLoggedIn', { writable: true });
+    dataShareMock.isUserLoggedIn = of([]);
+
+    authMock = jasmine.createSpyObj('AuthService', ['login', 'createUser', 'signOut']);
     ngbModal = jasmine.createSpyObj('NgbModal', ['open']);
     recipesServiceMock.getRecipes.and.returnValues(of([helper.createRecipes(2)]));
     TestBed.configureTestingModule({
       declarations: [ NavbarComponent ],
       providers: [
         {provide: RecipesService, useValue: recipesServiceMock},
+        {provide: DataSharingService, useValue: dataShareMock},
+        {provide: AuthService, useValue: authMock},
       ],
       imports: [
         ReactiveFormsModule,
@@ -45,6 +58,8 @@ describe('NavbarComponent', () => {
     component = fixture.componentInstance;
     domHelper = new DOMHelper(fixture);
     fixture.detectChanges();
+
+
   });
 
   it('should create', () => {

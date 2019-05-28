@@ -24,6 +24,7 @@ describe('RecipesAddComponent', () => {
   beforeEach(async(() => {
     fileServiceMock = jasmine.createSpyObj('FileService', ['chosenImage']);
     storeMock = jasmine.createSpyObj('Store', ['dispatch']);
+
     TestBed.configureTestingModule({
       declarations: [ RecipesAddComponent ],
       providers: [
